@@ -1,34 +1,11 @@
-<h1 style="text-align:center; color:#e63946;">❤️ Heart Disease Prediction App</h1>
+<h1 style="text-align:center; color:#d62828;">❤️ Heart Disease Prediction App</h1>
 
 <h2>📌 Overview</h2>
 <p>
-This project is a <b>Machine Learning web application</b> built with <b>Streamlit</b> that predicts whether a patient is at risk of heart disease.  
-We applied both <b>supervised</b> and <b>unsupervised learning</b>:
+This project is a <b>machine learning web app</b> that predicts whether a person is at risk of heart disease.  
+We started with the UCI Heart Disease dataset, performed <b>data cleaning, feature selection, PCA, supervised and unsupervised modeling</b>,  
+and finally deployed our best model using <b>Streamlit + Ngrok</b>.  
 </p>
-<ul>
-  <li><b>Supervised models</b> → Logistic Regression, Decision Tree, Random Forest, SVM</li>
-  <li><b>Unsupervised models</b> → K-Means Clustering, Hierarchical Clustering</li>
-</ul>
-<p>
-After tuning and evaluation, <b>Logistic Regression</b> was selected as the best-performing model and deployed with Streamlit.
-</p>
-
-<h2>🚀 Features</h2>
-<ul>
-  <li>✅ Predict heart disease risk from patient details (Logistic Regression model)</li>
-  <li>✅ Probability score for risk level</li>
-  <li>✅ Interactive data visualizations (age distribution, cholesterol levels, correlations, etc.)</li>
-  <li>✅ Explore clustering insights (unsupervised learning)</li>
-  <li>✅ Simple web interface built with <b>Streamlit</b></li>
-</ul>
-
-<h2>🧠 Machine Learning Workflow</h2>
-<ol>
-  <li><b>Data Preprocessing</b>: Encoding categorical features, scaling numeric features, feature selection</li>
-  <li><b>Supervised Learning</b>: Logistic Regression, Decision Tree, Random Forest, SVM → tuned with GridSearchCV & RandomizedSearchCV → Best model: Logistic Regression</li>
-  <li><b>Unsupervised Learning</b>: K-Means (elbow method), Hierarchical clustering (dendrogram), compared clusters with labels</li>
-  <li><b>Deployment</b>: Full pipeline (preprocessing + model) saved as <code>Best_Pipeline.pkl</code>, deployed with Streamlit</li>
-</ol>
 
 <h2>📊 Dataset</h2>
 <p>
@@ -41,49 +18,106 @@ Dataset: <b>Heart Disease UCI Dataset</b><br>
 </ul>
 </p>
 
-<h2>🖥️ How to Run Locally</h2>
-<pre>
-git clone https://github.com/your-username/heart-disease-prediction.git
-cd heart-disease-prediction
+<h2>🔧 What We Did</h2>
 
-pip install -r requirements.txt
+<h3>1. Data Preprocessing & Cleaning</h3>
+<p>
+We loaded the dataset into Pandas, handled missing values, encoded categorical features using One-Hot Encoding,  
+and standardized numerical features with StandardScaler.  
+We also explored the dataset visually with histograms, boxplots, and correlation heatmaps.  
+<b>Result:</b> a clean, ready-to-use dataset.
+</p>
 
-streamlit run app.py
-</pre>
+<h3>2. Dimensionality Reduction (PCA)</h3>
+<p>
+To simplify the dataset and reduce noise, we applied <b>Principal Component Analysis (PCA)</b>.  
+We checked how much variance each component explained and chose the number of components that gave a good balance.  
+<b>Result:</b> PCA-transformed dataset + variance visualization.
+</p>
 
-<h2>📂 Project Structure</h2>
-<pre>
-heart-disease-prediction/
-│── app.py                 # Streamlit app
-│── Best_Pipeline.pkl      # Trained ML pipeline (Logistic Regression)
-│── heart.csv              # Dataset
-│── notebooks/             # Jupyter notebooks (EDA, supervised, unsupervised)
-│── requirements.txt       # Dependencies
-│── README.md              # Project documentation
-</pre>
+<h3>3. Feature Selection</h3>
+<p>
+We didn’t just rely on PCA — we also wanted to know which features mattered most.  
+Using <b>Random Forest feature importance</b>, <b>Recursive Feature Elimination (RFE)</b>, and <b>Chi-Square tests</b>,  
+we ranked features and picked the most important ones for modeling.  
+<b>Result:</b> smaller dataset with only the strongest predictors.
+</p>
 
-<h2>📸 Screenshots</h2>
-<p><i>Add some screenshots of your app interface and visualizations here.</i></p>
-
-<h2>🔮 Future Improvements</h2>
+<h3>4. Supervised Learning</h3>
+<p>
+We trained several classification models:
 <ul>
-  <li>Add <b>bulk CSV upload</b> for multiple patients</li>
-  <li>Add <b>clustering visualization</b> page in the app (K-Means groups)</li>
-  <li>Deploy on <b>Streamlit Cloud / Hugging Face Spaces</b></li>
-  <li>Try <b>advanced ML models</b> (XGBoost, Neural Nets)</li>
+  <li>Logistic Regression</li>
+  <li>Decision Tree</li>
+  <li>Random Forest</li>
+  <li>Support Vector Machine (SVM)</li>
 </ul>
+We compared them using accuracy, precision, recall, F1-score, and ROC-AUC.  
+<b>Best performer:</b> Logistic Regression after tuning.
+</p>
+
+<h3>5. Unsupervised Learning</h3>
+<p>
+We also explored clustering to see how patients group together.  
+Using <b>K-Means (with the elbow method)</b> and <b>Hierarchical Clustering (dendrograms)</b>,  
+we found clusters and compared them with the actual disease labels.  
+<b>Result:</b> interesting insights about natural patient groupings.
+</p>
+
+<h3>6. Hyperparameter Tuning</h3>
+<p>
+We optimized our models with <b>GridSearchCV</b> and <b>RandomizedSearchCV</b>.  
+This step fine-tuned parameters like regularization (C) in Logistic Regression and depth in Decision Trees.  
+<b>Result:</b> Logistic Regression tuned to the best performance.
+</p>
+
+<h3>7. Model Export</h3>
+<p>
+We bundled preprocessing + model into one <b>scikit-learn pipeline</b> and saved it as <code>Best_Pipeline.pkl</code>.  
+This ensures reproducibility and makes deployment easier.  
+</p>
+
+<h3>8. Streamlit Web App</h3>
+<p>
+We built a simple UI where users can:
+<ul>
+  <li>Enter health details (age, cholesterol, chest pain type, etc.)</li>
+  <li>Get a prediction + probability of having heart disease</li>
+  <li>Explore visualizations (age distribution, cholesterol vs. target, heatmaps, etc.)</li>
+</ul>
+<b>Result:</b> a user-friendly heart disease prediction app.
+</p>
+
+<h3>9. Deployment with Ngrok</h3>
+<p>
+Since we worked in Google Colab, we used <b>Ngrok</b> to expose the Streamlit app publicly.  
+This allowed anyone to access the app via a shareable link.  
+<b>Result:</b> live demo link of the model in action.
+</p>
 
 <h2>👩‍💻 Authors</h2>
-<p>
-<b>Rawan Essam</b><br>
-AI & Machine Learning Enthusiast | Competitive Programmer<br>
-🔗 <a href="https://linkedin.com/in/your-profile">LinkedIn</a> | 
-<a href="https://github.com/your-username">GitHub</a>
-</p>
 
-<p>
-<b>Mohammed Saied</b><br>
-Machine Learning Developer | Data Science Enthusiast<br>
-🔗 <a href="https://linkedin.com/in/mohammed-profile">LinkedIn</a> | 
-<a href="https://github.com/mohammed-username">GitHub</a>
-</p>
+<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; margin-top: 20px;">
+
+  
+
+  <div style="flex: 0 1 250px; text-align:center; border:1px solid #ddd; padding:15px; border-radius:10px;">
+    <h3 style="color:#457b9d;">Mohammed Saied</h3>
+    <p>AI & Machine Learning Enthusiast</p>
+    <p>
+      🔗 <a href="www.linkedin.com/in/mohammed-sai3ed">LinkedIn</a> | 
+      <a href="https://github.com/Mohammed-Sai3ed">GitHub</a>
+    </p>
+  </div>
+<div style="flex: 0 1 250px; text-align:center; border:1px solid #ddd; padding:15px; border-radius:10px;">
+    <h3 style="color:#457b9d;">Rawan Essam</h3>
+    <p>AI & Machine Learning Enthusiast</p>
+    <p>
+      🔗 <a href="www.linkedin.com/in/rawanessammm">LinkedIn</a> | 
+      <a href="https://github.com/rawanessaam">GitHub</a>
+    </p>
+  </div>
+</div>
+
+
+</div>
