@@ -12,7 +12,7 @@ import pandas as pd
 import joblib
 
 # Load model
-model = joblib.load("models/Best_Model.pkl")
+model = joblib.load("models/final_model.pkl")
 
 st.set_page_config(page_title="❤️ Heart Disease Predictor", layout="centered")
 
