@@ -9,90 +9,205 @@ Original file is located at
 
 !pip install streamlit
 
+# import streamlit as st
+# import pandas as pd
+# import joblib
+
+# # Load model
+# model = joblib.load("/content/final_model.pkl")
+
+# st.set_page_config(page_title="❤️ Heart Disease Predictor", layout="centered")
+
+# st.title("❤️ Heart Disease Prediction App")
+# st.write("Enter patient details below:")
+
+# # Input form
+# age = st.number_input("Age", 20, 100, 50)
+# sex = st.selectbox("Sex", ["Male", "Female"])
+# cp = st.selectbox("Chest Pain Type (0-3)", [0,1,2,3])
+# trestbps = st.number_input("Resting Blood Pressure", 80, 200, 120)
+# chol = st.number_input("Serum Cholestoral", 100, 400, 200)
+# fbs = st.selectbox("Fasting Blood Sugar > 120 mg/dl", [0,1])
+# restecg = st.selectbox("Resting ECG", [0,1,2])
+# thalach = st.number_input("Max Heart Rate Achieved", 70, 210, 150)
+# exang = st.selectbox("Exercise Induced Angina", [0,1])
+# oldpeak = st.number_input("ST Depression", 0.0, 6.0, 1.0)
+# slope = st.selectbox("Slope", [0,1,2])
+# ca = st.selectbox("Major Vessels (0-4)", [0,1,2,3,4])
+# thal = st.selectbox("Thal (0-3)", [0,1,2,3])
+
+# # Collect inputs
+# data = pd.DataFrame([{
+#     "age": age, "sex": 1 if sex=="Male" else 0,
+#     "cp": cp, "trestbps": trestbps, "chol": chol,
+#     "fbs": fbs, "restecg": restecg, "thalach": thalach,
+#     "exang": exang, "oldpeak": oldpeak, "slope": slope,
+#     "ca": ca, "thal": thal
+# }])
+
+# # Prediction
+# if st.button("🔍 Predict"):
+#     prediction = model.predict(data)[0]
+#     st.subheader("Prediction:")
+#     if prediction == 1:
+#         st.error("💔 High Risk of Heart Disease")
+#     else:
+#         st.success("✅ Low Risk of Heart Disease")
+
+# import seaborn as sns
+# import matplotlib.pyplot as plt
+
+# st.subheader("📊 Dataset Insights")
+# df = pd.read_csv("/content/heart_preinc_scal.csv")
+
+# # 1. Distribution of target variable
+# st.markdown("### Target Distribution (0 = No Disease, 1 = Disease)")
+# fig, ax = plt.subplots()
+# sns.countplot(x="target", data=df, palette="coolwarm", ax=ax)
+# st.pyplot(fig)
+
+# # 2. Age distribution by disease status
+# st.markdown("### Age Distribution by Heart Disease Status")
+# fig, ax = plt.subplots()
+# sns.histplot(data=df, x="age", hue="target", kde=True, palette="coolwarm", ax=ax)
+# st.pyplot(fig)
+
+# # 3. Cholesterol vs Age scatter
+# st.markdown("### Cholesterol vs Age by Heart Disease Status")
+# fig, ax = plt.subplots()
+# sns.scatterplot(data=df, x="age", y="chol", hue="target", palette="coolwarm", ax=ax)
+# st.pyplot(fig)
+
+# # 4. Correlation heatmap
+# st.markdown("### Feature Correlation Heatmap")
+# fig, ax = plt.subplots(figsize=(10,6))
+# sns.heatmap(df.corr(), cmap="coolwarm", annot=False, ax=ax)
+# st.pyplot(fig)
+
+# # 5. Boxplot of resting blood pressure
+# st.markdown("### Resting Blood Pressure by Disease Status")
+# fig, ax = plt.subplots()
+# sns.boxplot(x="target", y="trestbps", data=df, palette="coolwarm", ax=ax)
+# st.pyplot(fig)
+
+# # 6. Pairplot (optional but heavy)
+# st.markdown("### Pairplot of Selected Features")
+# import itertools
+# selected_features = ["age", "chol", "thalach", "oldpeak", "target"]
+# sns.pairplot(df[selected_features], hue="target", palette="coolwarm", diag_kind="kde")
+# st.pyplot()
+
 import streamlit as st
 import pandas as pd
+import numpy as np
 import joblib
+import matplotlib.pyplot as plt
+import seaborn as sns
+import plotly.express as px
 
+# ---------------------------
 # Load model
+# ---------------------------
 model = joblib.load("/content/final_model.pkl")
 
-st.set_page_config(page_title="❤️ Heart Disease Predictor", layout="centered")
+# ---------------------------
+# Streamlit page setup
+# ---------------------------
+st.set_page_config(page_title="❤️ Heart Disease Predictor", layout="wide")
 
 st.title("❤️ Heart Disease Prediction App")
-st.write("Enter patient details below:")
+st.write("This app predicts the likelihood of heart disease based on patient data and provides data visualizations.")
 
-# Input form
-age = st.number_input("Age", 20, 100, 50)
-sex = st.selectbox("Sex", ["Male", "Female"])
-cp = st.selectbox("Chest Pain Type (0-3)", [0,1,2,3])
-trestbps = st.number_input("Resting Blood Pressure", 80, 200, 120)
-chol = st.number_input("Serum Cholestoral", 100, 400, 200)
-fbs = st.selectbox("Fasting Blood Sugar > 120 mg/dl", [0,1])
-restecg = st.selectbox("Resting ECG", [0,1,2])
-thalach = st.number_input("Max Heart Rate Achieved", 70, 210, 150)
-exang = st.selectbox("Exercise Induced Angina", [0,1])
-oldpeak = st.number_input("ST Depression", 0.0, 6.0, 1.0)
-slope = st.selectbox("Slope", [0,1,2])
-ca = st.selectbox("Major Vessels (0-4)", [0,1,2,3,4])
-thal = st.selectbox("Thal (0-3)", [0,1,2,3])
+# ---------------------------
+# Sidebar input form
+# ---------------------------
+st.sidebar.header("Enter Patient Data")
 
-# Collect inputs
-data = pd.DataFrame([{
-    "age": age, "sex": 1 if sex=="Male" else 0,
-    "cp": cp, "trestbps": trestbps, "chol": chol,
-    "fbs": fbs, "restecg": restecg, "thalach": thalach,
-    "exang": exang, "oldpeak": oldpeak, "slope": slope,
-    "ca": ca, "thal": thal
-}])
+def user_input_features():
+    age = st.sidebar.slider("Age", 20, 100, 50)
+    sex = st.sidebar.selectbox("Sex", ("Male", "Female"))
+    cp = st.sidebar.selectbox("Chest Pain Type (0-3)", [0,1,2,3])
+    trestbps = st.sidebar.slider("Resting Blood Pressure", 80, 200, 120)
+    chol = st.sidebar.slider("Serum Cholestoral (mg/dl)", 100, 400, 200)
+    fbs = st.sidebar.selectbox("Fasting Blood Sugar > 120 mg/dl", [0,1])
+    restecg = st.sidebar.selectbox("Resting ECG Results", [0,1,2])
+    thalach = st.sidebar.slider("Max Heart Rate Achieved", 70, 210, 150)
+    exang = st.sidebar.selectbox("Exercise Induced Angina", [0,1])
+    oldpeak = st.sidebar.slider("ST Depression (oldpeak)", 0.0, 6.0, 1.0)
+    slope = st.sidebar.selectbox("Slope of Peak Exercise ST Segment", [0,1,2])
+    ca = st.sidebar.selectbox("Major Vessels Colored by Fluoroscopy (0-4)", [0,1,2,3,4])
+    thal = st.sidebar.selectbox("Thal (0-3)", [0,1,2,3])
 
+    data = {
+        "age": age,
+        "sex": 1 if sex == "Male" else 0,
+        "cp": cp,
+        "trestbps": trestbps,
+        "chol": chol,
+        "fbs": fbs,
+        "restecg": restecg,
+        "thalach": thalach,
+        "exang": exang,
+        "oldpeak": oldpeak,
+        "slope": slope,
+        "ca": ca,
+        "thal": thal
+    }
+    return pd.DataFrame(data, index=[0])
+
+input_df = user_input_features()
+
+# ---------------------------
 # Prediction
+# ---------------------------
 if st.button("🔍 Predict"):
-    prediction = model.predict(data)[0]
-    st.subheader("Prediction:")
+    prediction = model.predict(input_df)[0]
+    st.subheader("Prediction Result:")
     if prediction == 1:
         st.error("💔 High Risk of Heart Disease")
     else:
         st.success("✅ Low Risk of Heart Disease")
 
-import seaborn as sns
-import matplotlib.pyplot as plt
+# ---------------------------
+# Data Visualizations
+# ---------------------------
+st.markdown("---")
+st.header("📊 Heart Disease Data Insights")
 
-st.subheader("📊 Dataset Insights")
-df = pd.read_csv("/content/heart_preinc_scal.csv")
+try:
+    df = pd.read_csv("/content/heart_preinc_scal.csv")
 
-# 1. Distribution of target variable
-st.markdown("### Target Distribution (0 = No Disease, 1 = Disease)")
-fig, ax = plt.subplots()
-sns.countplot(x="target", data=df, palette="coolwarm", ax=ax)
-st.pyplot(fig)
+    # 1. Target distribution
+    st.subheader("Target Distribution")
+    fig, ax = plt.subplots()
+    sns.countplot(x="target", data=df, palette="coolwarm", ax=ax)
+    st.pyplot(fig)
 
-# 2. Age distribution by disease status
-st.markdown("### Age Distribution by Heart Disease Status")
-fig, ax = plt.subplots()
-sns.histplot(data=df, x="age", hue="target", kde=True, palette="coolwarm", ax=ax)
-st.pyplot(fig)
+    # 2. Age distribution by disease status
+    st.subheader("Age Distribution by Heart Disease Status")
+    fig, ax = plt.subplots()
+    sns.histplot(df, x="age", hue="target", kde=True, palette="coolwarm", ax=ax)
+    st.pyplot(fig)
 
-# 3. Cholesterol vs Age scatter
-st.markdown("### Cholesterol vs Age by Heart Disease Status")
-fig, ax = plt.subplots()
-sns.scatterplot(data=df, x="age", y="chol", hue="target", palette="coolwarm", ax=ax)
-st.pyplot(fig)
+    # 3. Cholesterol vs Age scatter
+    st.subheader("Cholesterol vs Age")
+    fig = px.scatter(df, x="age", y="chol", color="target",
+                     title="Cholesterol vs Age by Heart Disease Status",
+                     labels={"chol": "Cholesterol", "age": "Age"})
+    st.plotly_chart(fig)
 
-# 4. Correlation heatmap
-st.markdown("### Feature Correlation Heatmap")
-fig, ax = plt.subplots(figsize=(10,6))
-sns.heatmap(df.corr(), cmap="coolwarm", annot=False, ax=ax)
-st.pyplot(fig)
+    # 4. Correlation heatmap
+    st.subheader("Correlation Heatmap")
+    fig, ax = plt.subplots(figsize=(10,6))
+    sns.heatmap(df.corr(), cmap="coolwarm", annot=False, ax=ax)
+    st.pyplot(fig)
 
-# 5. Boxplot of resting blood pressure
-st.markdown("### Resting Blood Pressure by Disease Status")
-fig, ax = plt.subplots()
-sns.boxplot(x="target", y="trestbps", data=df, palette="coolwarm", ax=ax)
-st.pyplot(fig)
+    # 5. Resting blood pressure boxplot
+    st.subheader("Resting Blood Pressure by Heart Disease Status")
+    fig, ax = plt.subplots()
+    sns.boxplot(x="target", y="trestbps", data=df, palette="coolwarm", ax=ax)
+    st.pyplot(fig)
 
-# 6. Pairplot (optional but heavy)
-st.markdown("### Pairplot of Selected Features")
-import itertools
-selected_features = ["age", "chol", "thalach", "oldpeak", "target"]
-sns.pairplot(df[selected_features], hue="target", palette="coolwarm", diag_kind="kde")
-st.pyplot()
+except Exception as e:
+    st.warning("Dataset not found for visualization. Please ensure 'data/heart_disease.csv' exists.")
+    st.text(f"Error: {e}")
