@@ -12,7 +12,7 @@ import pandas as pd
 import joblib
 
 # Load model
-model = joblib.load("/content/final_model.pkl")
+model = joblib.load("models/Best_Model.pkl")
 
 st.set_page_config(page_title="❤️ Heart Disease Predictor", layout="centered")
 
@@ -56,7 +56,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 st.subheader("📊 Dataset Insights")
-df = pd.read_csv("/content/heart_preinc_scal.csv")
+df = pd.read_csv("data/heart.csv")
 
 # 1. Distribution of target variable
 st.markdown("### Target Distribution (0 = No Disease, 1 = Disease)")
