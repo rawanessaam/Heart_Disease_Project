@@ -88,12 +88,7 @@ fig, ax = plt.subplots()
 sns.boxplot(x="target", y="trestbps", data=df, palette="coolwarm", ax=ax)
 st.pyplot(fig)
 
-# 6. Pairplot (optional but heavy)
-st.markdown("### Pairplot of Selected Features")
-import itertools
-selected_features = ["age", "chol", "thalach", "oldpeak", "target"]
-sns.pairplot(df[selected_features], hue="target", palette="coolwarm", diag_kind="kde")
-st.pyplot()
+
 
 # import streamlit as st
 # import pandas as pd
