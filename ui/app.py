@@ -69,7 +69,9 @@ if st.button("🔍 Predict"):
         st.error("💔 High Risk of Heart Disease")
     else:
         st.success("✅ Low Risk of Heart Disease")
-
+        
+    proba = pipeline.predict_proba(input_df)[0][1]
+    st.write("Predicted probability:", proba)
 # ---------------------------
 # Data Visualizations
 # ---------------------------
