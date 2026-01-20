@@ -1,20 +1,22 @@
-🔹 Accuracy: 0.8341463414634146
-🔹 Precision: 0.8090277777777778
-🔹 Recall: 0.8859315589353612
-🔹 F1 Score: 0.8457350272232305
-🔹 ROC-AUC: 0.9095910452082872
+Final Logistic Regression Model Performance (After Hyperparameter Tuning):
+🔹 Accuracy: 0.9167
+🔹 Precision (weighted): 0.92
+🔹 Recall (weighted): 0.92
+🔹 F1 Score (weighted): 0.92
+🔹 ROC–AUC: 0.9383
 
 📊 Classification Report:
-               precision    recall  f1-score   support
+              precision    recall  f1-score   support
 
-           0       0.87      0.78      0.82       499
-           1       0.81      0.89      0.85       526
+           0       0.87      0.96      0.91        27
+           1       0.97      0.88      0.92        33
 
-    accuracy                           0.83      1025
-   macro avg       0.84      0.83      0.83      1025
-weighted avg       0.84      0.83      0.83      1025
+    accuracy                           0.92        60
+   macro avg       0.92      0.92      0.92        60
+weighted avg       0.92      0.92      0.92        60
+
 
 
 🔹 Confusion Matrix:
-[[389 110]
- [ 60 466]]
+[[26  1]
+ [ 4 29]]
