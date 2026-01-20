@@ -20,7 +20,7 @@ import plotly.express as px
 # ---------------------------
 # Load model
 # ---------------------------
-pipeline = joblib.load("/content/final_pipeline.pkl")
+pipeline = joblib.load("pipeline/final_pipeline.pkl")
 
 # ---------------------------
 # Streamlit page setup
