@@ -20,7 +20,7 @@ import plotly.express as px
 # ---------------------------
 # Load model
 # ---------------------------
-pipeline = joblib.load("pipeline/final_pipeline.pkl")
+pipeline = joblib.load("/content/final_pipeline.pkl")
 
 # ---------------------------
 # Streamlit page setup
@@ -37,31 +37,21 @@ st.sidebar.header("Enter Patient Data")
 
 def user_input_features():
     age = st.sidebar.slider("Age", 20, 100, 50)
-    sex = st.sidebar.selectbox("Sex", ("Male", "Female"))
     cp = st.sidebar.selectbox("Chest Pain Type (0-3)", [0,1,2,3])
     trestbps = st.sidebar.slider("Resting Blood Pressure", 80, 200, 120)
     chol = st.sidebar.slider("Serum Cholestoral (mg/dl)", 100, 400, 200)
-    fbs = st.sidebar.selectbox("Fasting Blood Sugar > 120 mg/dl", [0,1])
-    restecg = st.sidebar.selectbox("Resting ECG Results", [0,1,2])
     thalach = st.sidebar.slider("Max Heart Rate Achieved", 70, 210, 150)
-    exang = st.sidebar.selectbox("Exercise Induced Angina", [0,1])
     oldpeak = st.sidebar.slider("ST Depression (oldpeak)", 0.0, 6.0, 1.0)
-    slope = st.sidebar.selectbox("Slope of Peak Exercise ST Segment", [0,1,2])
     ca = st.sidebar.selectbox("Major Vessels Colored by Fluoroscopy (0-4)", [0,1,2,3,4])
     thal = st.sidebar.selectbox("Thal (0-3)", [0,1,2,3])
 
     data = {
         "age": age,
-        "sex": 1 if sex == "Male" else 0,
         "cp": cp,
         "trestbps": trestbps,
         "chol": chol,
-        "fbs": fbs,
-        "restecg": restecg,
         "thalach": thalach,
-        "exang": exang,
         "oldpeak": oldpeak,
-        "slope": slope,
         "ca": ca,
         "thal": thal
     }
@@ -87,7 +77,7 @@ st.markdown("---")
 st.header("📊 Heart Disease Data Insights")
 
 try:
-    df = pd.read_csv("data/clean_heart.csv")
+    df = pd.read_csv("/content/clean_heart.csv")
 
     # 1. Target distribution
     st.subheader("Target Distribution")
