@@ -77,7 +77,7 @@ st.markdown("---")
 st.header("📊 Heart Disease Data Insights")
 
 try:
-    df = pd.read_csv("/content/clean_heart.csv")
+    df = pd.read_csv("data/clean_heart.csv")
 
     # 1. Target distribution
     st.subheader("Target Distribution")
