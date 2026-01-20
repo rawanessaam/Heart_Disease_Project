@@ -20,7 +20,7 @@ import plotly.express as px
 # ---------------------------
 # Load model
 # ---------------------------
-pipeline = joblib.load("/content/final_pipeline.pkl")
+pipeline = joblib.load("final_pipeline.pkl")
 
 # ---------------------------
 # Streamlit page setup
@@ -87,7 +87,7 @@ st.markdown("---")
 st.header("📊 Heart Disease Data Insights")
 
 try:
-    df = pd.read_csv("/content/clean_heart.csv")
+    df = pd.read_csv("clean_heart.csv")
 
     # 1. Target distribution
     st.subheader("Target Distribution")
