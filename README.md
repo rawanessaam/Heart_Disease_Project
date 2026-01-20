@@ -4,7 +4,7 @@
 <p>
 This project is a <b>machine learning web app</b> that predicts whether a person is at risk of heart disease.  
 We started with the UCI Heart Disease dataset, performed <b>data cleaning, feature selection, PCA, supervised and unsupervised modeling</b>,  
-and finally deployed our best model using <b>Streamlit + Ngrok</b>.  
+and finally deployed our best model using <b>Streamlit</b>.  
 </p>
 
 <h2>📊 Dataset</h2>
@@ -86,13 +86,6 @@ We built a simple UI where users can:
   <li>Explore visualizations (age distribution, cholesterol vs. target, heatmaps, etc.)</li>
 </ul>
 <b>Result:</b> a user-friendly heart disease prediction app.
-</p>
-
-<h3>9. Deployment with Ngrok</h3>
-<p>
-Since we worked in Google Colab, we used <b>Ngrok</b> to expose the Streamlit app publicly.  
-This allowed anyone to access the app via a shareable link.  
-<b>Result:</b> live demo link of the model in action.
 </p>
 
 <h2>👩‍💻 Authors</h2>
